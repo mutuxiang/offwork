@@ -1,0 +1,90 @@
+.ritual-icon{display:inline-block;object-fit:contain;width:30px;height:30px;mix-blend-mode:multiply}
+.ritual-title{font-size:28px;line-height:1.25;margin:0 0 16px;letter-spacing:-1px}
+.ritual-title em{font-style:italic;font-weight:500}.ritual-title mark{background:#F8DF77;border-radius:5px;padding:0 4px;color:inherit}
+.ritual-shutdown{display:flex;flex-direction:column}
+.ritual-rec{display:flex;flex:1;flex-direction:column;align-items:center;justify-content:center;min-height:285px;padding:16px 0 10px}
+.ritual-mic{position:relative;width:152px;height:152px;min-height:152px;border-radius:50%;padding:0;border:2px solid var(--ink);background:var(--ink);display:grid;place-items:center;touch-action:manipulation}.ritual-mic:active{transform:scale(.97)}
+.ritual-mic .mic-art{width:58px;height:58px;filter:invert(1) hue-rotate(180deg);mix-blend-mode:screen}
+.ritual-mic-ring{position:absolute;inset:-11px;border:2px solid var(--ink);border-radius:50%;opacity:.18;pointer-events:none}
+.ritual-progress{position:absolute;inset:-11px;width:170px;height:170px;transform:rotate(-90deg);opacity:0;pointer-events:none}
+.ritual-progress circle{fill:none;stroke:var(--ink);stroke-width:3;stroke-linecap:round}
+.is-recording .ritual-mic{background:#F5B8D9;color:var(--ink)}
+.is-recording .mic-art{filter:none;mix-blend-mode:multiply}.is-recording .ritual-progress{opacity:1}
+.ritual-wave{display:flex;align-items:center;justify-content:center;gap:3px;height:34px;margin:14px 0 6px}
+.ritual-wave i{width:3px;height:5px;border-radius:2px;background:var(--ink)}
+.is-recording .ritual-wave i{animation:ritual-wave .6s ease-in-out infinite alternate;animation-delay:var(--delay)}
+@keyframes ritual-wave{from{height:4px}to{height:var(--bar)}}
+.ritual-rec>strong{font-size:14px;font-weight:600}.ritual-rec>#record-clock{margin-top:4px;font-variant-numeric:tabular-nums}
+.ritual-bottom{display:flex;flex-direction:column;align-items:center;padding-top:12px}.ritual-bottom .link{font-size:12px}
+.ritual-vault{background:#B7CBEB;border:2px solid var(--ink);border-radius:20px;padding:14px;margin:12px 0}
+.ritual-vault h3{font-size:15px;margin:0}.ritual-vault .row>span{font-size:10px;white-space:nowrap;color:#414944}
+.ritual-task-list{display:flex;flex-direction:column;gap:7px;margin-top:12px}
+.ritual-task{display:flex;align-items:center;gap:8px;border:1px solid var(--ink);border-radius:12px;background:var(--paper);padding:8px 10px;font-size:13px;line-height:1.45}
+.ritual-task i{width:14px;height:14px;border:1px solid var(--ink);border-radius:3px;flex-shrink:0}
+.ritual-task-list p{font-size:13px;color:var(--ink)}
+.ritual-achievement{position:relative;overflow:hidden;border:2px solid var(--ink);border-radius:18px;background:#F8DF77;padding:14px 60px 14px 14px;margin-top:12px}
+.ritual-achievement>div{font-size:11px;letter-spacing:.07em;margin-bottom:6px}.ritual-achievement>strong{font-size:16px;line-height:1.4;display:block}
+.achievement-star{position:absolute;width:68px;height:68px;right:-7px;bottom:-10px;transform:rotate(-12deg)}
+.ritual-switch{position:relative;height:72px;border:2px solid var(--ink);border-radius:40px;overflow:hidden;background:var(--paper);--switch-progress:0%}
+.ritual-switch:before{content:'';position:absolute;inset:0 auto 0 0;width:var(--switch-progress);background:#F5B8D9;pointer-events:none}
+.ritual-switch>span{position:absolute;inset:0;display:grid;place-items:center;font-size:13px;font-weight:700;padding-left:32px;pointer-events:none}
+.ritual-switch input[type=range]{appearance:none;-webkit-appearance:none;position:absolute;inset:0;z-index:2;width:100%;height:68px;margin:0;padding:6px;background:transparent;cursor:grab}
+.ritual-switch input[type=range]::-webkit-slider-runnable-track{height:56px;background:transparent}
+.ritual-switch input[type=range]::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;height:56px;width:56px;border-radius:50%;border:0;background:var(--ink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FFF8EC' stroke-width='2'%3E%3Cpath d='M4 12h16m-6-6 6 6-6 6'/%3E%3C/svg%3E") center/23px no-repeat;cursor:grab}
+.ritual-switch input[type=range]::-moz-range-thumb{height:56px;width:56px;border-radius:50%;border:0;background:var(--ink);cursor:grab}
+.ritual-switch input[type=range]:focus-visible{outline:3px solid #656e53;outline-offset:-4px}
+.ritual-slider-footer{padding-top:16px}
+.ritual-analyzing{height:100%;min-height:250px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.ritual-analyzing h3{font-size:18px;margin:14px 0 8px}.ritual-analyzing p{font-size:12px}
+.analyzing-dots{display:flex;gap:8px}.analyzing-dots i{width:10px;height:10px;background:var(--ink);border-radius:50%;animation:ritual-dot .9s infinite}
+.analyzing-dots i:nth-child(2){animation-delay:.15s;background:#F5B8D9}.analyzing-dots i:nth-child(3){animation-delay:.3s;background:#F8DF77}
+@keyframes ritual-dot{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-7px)}}
+.phone.ritual-dark{background:var(--ink);color:var(--paper)}.ritual-dark .status{color:var(--paper)}
+.ritual-closed{display:flex;align-items:center;justify-content:center;height:100%}
+.ritual-closed-copy{text-align:center;width:100%;padding:24px 4px}.ritual-closed-copy>.ritual-icon{width:56px;height:56px;filter:invert(1) hue-rotate(180deg);mix-blend-mode:screen;margin-bottom:20px}
+.ritual-closed-copy h2{font-size:26px;line-height:1.4;margin:0 0 16px}.ritual-closed-copy p{font-size:13px;color:#dedbd0;margin-bottom:30px}
+.ritual-closed-copy .primary{background:var(--paper);color:var(--ink);border-color:var(--paper);font-size:14px;min-height:48px}
+.ritual-pod{position:relative}.pod-moon{position:absolute;right:-8px;top:24px;width:66px;height:66px;transform:rotate(14deg);opacity:.7;pointer-events:none}
+.pod-arrival{display:flex;align-items:center;gap:10px;padding:10px 52px 10px 12px;border:1px solid var(--ink);border-radius:13px;background:var(--paper);margin:0 0 16px}
+.pod-arrival>i{width:8px;height:8px;border-radius:50%;background:#9CAE70;border:1px solid var(--ink);flex-shrink:0}
+.pod-arrival strong{display:block;font-size:12px}.pod-arrival span{display:block;font-size:11px;color:var(--muted);margin-top:3px}
+.ritual-pod .ritual-title{font-size:26px;margin-bottom:6px}.pod-sound-heading{font-size:12px;color:var(--muted)}.pod-sound-heading .link{font-size:12px;min-height:36px}
+.ritual-sounds{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px}
+.ritual-sound{position:relative;min-height:83px;text-align:left;border:2px solid var(--ink);border-radius:16px;padding:10px 11px;background:var(--paper)}
+.ritual-sound>strong{display:block;font-size:13px;line-height:1.4;padding-right:20px}.ritual-sound>span{display:block;font-size:10px;margin-top:3px;color:var(--muted)}
+.ritual-sound>.ritual-icon{position:absolute;right:9px;top:9px;width:24px;height:24px}
+.ritual-sound.selected{background:var(--ink);color:var(--paper)}.ritual-sound.selected>span{color:#dedbd0}.ritual-sound.selected .ritual-icon{filter:invert(1) hue-rotate(180deg);mix-blend-mode:screen}
+.sound-bars{display:flex;align-items:flex-end;gap:3px;height:14px;margin-top:5px}.sound-bars i{display:block;width:3px;border-radius:2px;background:currentColor;opacity:.6}
+.is-playing .sound-bars i{animation:ritual-eq .7s infinite alternate}@keyframes ritual-eq{to{transform:scaleY(.4)}}
+.ritual-breathe{margin-top:12px;border:2px solid var(--ink);border-radius:18px;background:#cbd6aa;color:var(--ink);padding:12px;display:flex;align-items:center;gap:13px;min-height:81px}
+.breath-orb{width:48px;height:48px;border:2px solid var(--ink);border-radius:50%;display:grid;place-items:center;flex-shrink:0;background:#e8eddc;font-size:11px;font-weight:700;animation:ritual-breathe 19s linear infinite}
+.ritual-breathe>div:nth-child(2){flex:1;min-width:0}.ritual-breathe strong{display:block;font-size:13px}.ritual-breathe span{display:block;font-size:11px;margin-top:4px}.ritual-breathe .link{font-size:12px;padding:4px;min-width:44px}
+.ritual-breathe.paused .breath-orb{animation-play-state:paused}
+@keyframes ritual-breathe{0%,100%{transform:scale(.8)}21.05%,57.89%{transform:scale(1)}}
+@media(max-width:460px){.ritual-rec{min-height:255px}.ritual-mic{width:136px;height:136px;min-height:136px}.ritual-progress{width:154px;height:154px}.ritual-title{font-size:26px}.ritual-vault{padding:12px}.ritual-vault .row{gap:5px}.ritual-vault .row>span{font-size:9px}.ritual-pod .ritual-title{font-size:24px}.ritual-sound>strong{font-size:12px}.ritual-sound{padding:9px;min-height:80px}}
+@media(prefers-reduced-motion:reduce){.ritual-wave i,.sound-bars i,.breath-orb,.analyzing-dots i{animation:none!important}}
+/* Low-fidelity adaptation: retain the reference flow with neutral wireframes. */
+.ritual-vault,.ritual-achievement,.ritual-breathe{background:#eeeee7;border:1px solid var(--line)}
+.ritual-task,.pod-arrival,.ritual-sound{border:1px solid var(--line)}
+.ritual-title mark{background:#e8e8df}
+.ritual-vault,.ritual-achievement,.ritual-breathe,.ritual-sound{border-radius:12px}
+.ritual-mic{width:116px;height:116px;min-height:116px;border:1px solid var(--ink)}
+.ritual-mic-ring,.ritual-progress,.ritual-wave,.sound-bars{display:none}
+.ritual-mic .mic-art{width:40px;height:40px;filter:none;mix-blend-mode:normal;color:var(--paper)}
+.is-recording .ritual-mic{background:#e4e4db}.is-recording .mic-art{color:var(--ink)}
+.ritual-rec{min-height:220px;gap:10px}.ritual-rec>strong{margin-top:6px}
+.ritual-sound{min-height:68px;padding:11px}.ritual-sound>strong{padding-right:0;font-weight:600}
+.ritual-sound.selected{border-color:var(--ink)}
+.ritual-closed-copy>.ritual-icon{filter:none;mix-blend-mode:normal;width:42px;height:42px}
+.ritual-switch{height:64px;border:1px solid var(--ink)}.ritual-switch:before{background:#deded3}
+.ritual-switch input[type=range]{height:62px}.ritual-switch input[type=range]::-webkit-slider-runnable-track{height:50px}
+.ritual-switch input[type=range]::-webkit-slider-thumb{height:50px;width:50px}
+.breath-orb{animation:none;border:1px solid var(--ink);background:var(--paper)}
+.analyzing-dots i{animation:none}.analyzing-dots i:nth-child(2),.analyzing-dots i:nth-child(3){background:#aaa99f}
+.ritual-achievement>strong{font-size:15px}.ritual-vault h3{font-weight:600}.ritual-title{font-size:27px}
+.ritual-sealed .ritual-title{font-size:24px;line-height:1.25;margin-bottom:8px}
+.ritual-vault{padding:10px;margin:8px 0}.ritual-task-list{gap:6px;margin-top:9px}.ritual-task{padding:6px 9px;font-size:12px}.ritual-achievement{padding:10px;margin-top:8px}.ritual-achievement>div{margin-bottom:4px}.ritual-achievement>strong{font-size:14px}
+.pod-arrival{padding:7px 10px;margin-bottom:10px;min-height:34px}
+.ritual-pod .ritual-title{font-size:22px;line-height:1.35;margin-bottom:3px}.pod-sound-heading .link{min-height:32px}.ritual-sounds{gap:6px;margin-top:2px}.ritual-sound{min-height:51px;padding:7px 9px}.ritual-sound>strong{font-size:12px}.ritual-sound>span{font-size:10px;line-height:1.3;margin-top:2px}
+.ritual-breathe{padding:6px 10px;min-height:56px;margin-top:8px;gap:10px}.breath-orb{width:38px;height:38px}.ritual-breathe strong{font-size:12px}.ritual-breathe span{font-size:10px;margin-top:2px}
+.is-recording .ritual-wave{display:flex;height:18px;margin:5px 0}.is-recording .ritual-wave i{animation:none;height:calc(var(--bar) / 2);opacity:.5}

@@ -1,0 +1,167 @@
+/* ==========================================================================
+   vent.css · 关机仪式「把今天说出来」
+   同一个情绪字场承接两种输入：语音（识别结果逐句落下）与打字（写完一句落一句）。
+   普通句子轻轻散去，情绪重的句子停留更久、换成陶土红、放大并带上粉色高亮块，
+   旁边浮出小元素作为回响。字场不套卡片，不把句子装进气泡。
+   ========================================================================== */
+
+.vent{
+  position:relative;flex:1 1 auto;min-height:0;display:flex;flex-direction:column;
+  margin-top:2px;
+}
+/* 关机仪式屏：内容区改成竖向 flex，让字场把余量吃掉 */
+.screen-content.vent-screen{display:flex;flex-direction:column}
+.screen-content.vent-screen>.page-action{margin-top:0}
+.vent-title{font-size:27px;line-height:1.24;margin:2px 0 6px}
+.vent-title em{
+  font-style:normal;display:inline-block;transform:rotate(-1.6deg) translateX(5px);
+  font-weight:800;
+}
+
+/* ---------- 字场 ---------- */
+.vent-field{
+  position:relative;flex:1 1 auto;min-height:150px;overflow:hidden;
+  margin:2px -4px 0;
+}
+.vent.is-text .vent-mic{display:none}
+
+
+/* ---------- 空字场里的小装饰 ---------- */
+.vent-doodles{
+  position:absolute;inset:0;pointer-events:none;
+  transition:opacity .35s ease;
+}
+.vent.is-rec .vent-doodles{opacity:0}
+.vent-doodles .vd{
+  position:absolute;opacity:.55;
+  transition:opacity .35s ease,transform .6s ease;
+}
+.vd.d1{left:9%;top:10%;width:40px;height:40px;transform:rotate(-11deg)}
+.vd.d2{right:13%;top:4%;width:26px;height:26px;transform:rotate(13deg)}
+.vd.d3{left:19%;top:44%;width:34px;height:34px;transform:rotate(-6deg)}
+.vd.d4{right:16%;top:50%;width:36px;height:36px;transform:rotate(15deg)}
+.vd.d5{left:46%;top:0;width:24px;height:24px;transform:rotate(9deg)}
+.vd.d6{right:32%;bottom:4%;width:30px;height:30px;transform:rotate(-13deg)}
+@media(prefers-reduced-motion:reduce){
+  .vent-doodles .vd{transition:none}
+}
+
+/* ---------- 句子片段 ---------- */
+.vf{
+  position:absolute;left:var(--x);top:var(--y);
+  max-width:min(80%,300px);transform-origin:left top;
+  animation:vfIn .44s cubic-bezier(.28,.86,.4,1) both;
+}
+.vf-in{
+  display:inline-block;position:relative;padding:1px 2px;border-radius:7px;
+  line-height:1.36;font-weight:600;
+  animation:vfFade var(--fade,2.4s) ease-in var(--hold,.6s) both;
+}
+.vf-hi{
+  background:var(--pink);border-radius:7px;padding:0 5px;
+  box-shadow:1px 1px 0 rgba(20,20,20,.1);
+  display:inline-block;transform:rotate(-.8deg);
+}
+@keyframes vfIn{
+  from{opacity:0;transform:rotate(var(--rot,0deg)) scale(.9) translateY(9px)}
+  to{opacity:1;transform:rotate(var(--rot,0deg)) scale(1) translateY(0)}
+}
+@keyframes vfFade{from{opacity:1}to{opacity:0}}
+
+/* 三档：普通 / 有点重 / 很重 */
+.vf.w1 .vf-in{font-size:14px;color:var(--ink-3)}
+.vf.w2 .vf-in{font-size:16.5px;color:var(--ink-2);font-weight:700}
+.vf.w3 .vf-in{font-size:23px;color:var(--terra);font-weight:800;letter-spacing:-.01em;line-height:1.3}
+.vf.w3.long .vf-in{font-size:19.5px}
+.vf.w3{max-width:min(92%,344px)}
+
+/* 最新一句：先不淡，等下一句出现再开始计时 */
+.vf.vf-last .vf-in{animation-play-state:paused}
+.vf.vf-last .vf-in{opacity:1}
+
+/* 情绪回响小元素 */
+.vf-el{
+  position:absolute;width:24px;height:24px;pointer-events:none;
+  animation:vfEl .5s cubic-bezier(.24,.9,.34,1) both .1s;
+}
+.vf.w3 .vf-el{width:30px;height:30px}
+@keyframes vfEl{from{opacity:0;transform:scale(.35)}to{opacity:1;transform:scale(1)}}
+
+/* ---------- 话筒：倾诉前与倾诉中同一位置 ----------
+   两种状态共用一个固定高度的 .vent-mic：块顶对齐、话筒尺寸一致，
+   所以话筒的中心点不会因为「开始倾诉」而移动。状态文字在下、
+   高度变化不影响话筒。 */
+.vent-mic{
+  position:relative;flex:none;height:212px;
+  display:flex;flex-direction:column;align-items:center;
+  padding-top:10px;
+}
+
+
+
+.vent-rec{
+  position:relative;display:grid;place-items:center;padding:0;flex-shrink:0;
+  border:2px solid var(--ink);border-radius:50%;background:var(--ink);
+  transition:transform .16s,box-shadow .16s;
+}
+.vent-rec:active{transform:scale(.96)}
+.vent-mic .vent-rec{width:124px;height:124px;box-shadow:6px 6px 0 rgba(20,20,20,.16)}
+/* 话筒素材是竖长的（墨迹只占画布宽 0.46），盒子要给足高度，否则缩得只有一个点。
+   黑底上用纯白剪影，比反相后压在黑色上的暗棕更清楚。 */
+.vent-rec>.ii{width:66px;height:66px;filter:brightness(0) invert(1)}
+.vent.is-rec .vent-rec{background:var(--pink);box-shadow:5px 5px 0 var(--ink);animation:recBreath 2.6s ease-in-out infinite}
+.vent.is-rec .vent-rec>.ii{filter:none;width:64px;height:64px}
+@keyframes recBreath{0%,100%{transform:scale(1)}50%{transform:scale(1.045)}}
+.vent-rec .vent-ring{
+  position:absolute;inset:-2px;border-radius:50%;border:2px solid var(--ink);opacity:0;
+}
+.vent.is-rec .vent-rec .vent-ring.go{animation:recRing 1.5s cubic-bezier(.2,.6,.4,1) forwards}
+@keyframes recRing{
+  from{opacity:.42;transform:scale(1)}
+  to{opacity:0;transform:scale(1.5)}
+}
+
+/* ---------- 降温条已去掉：不再用进度条催促用户说多久 ------------- */
+
+/* ---------- 状态：话筒下方，两种状态同一处 ---------- */
+.vent-status{display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;min-width:0;max-width:100%;margin-top:14px}
+.vent-status strong{font-size:15.5px;font-weight:800}
+.vent-status span{font-size:12.5px;font-weight:600;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.vent-eq{display:flex;justify-content:center;align-items:flex-end;gap:3px;height:15px;margin-top:9px}
+/* 必须有基准高度：动画被禁用（截图探针 / 用户关掉动效）时也不能整条消失 */
+.vent-eq i{display:block;width:3px;height:6px;border-radius:2px;background:var(--ink);opacity:.35}
+.vent.is-rec .vent-eq i{opacity:.8;animation:eqJump .7s ease-in-out infinite alternate;animation-delay:var(--d)}
+@keyframes eqJump{from{height:4px}to{height:var(--h)}}
+.vent-flag{
+  position:absolute;right:2px;top:0;flex-shrink:0;
+  font-size:11.5px;font-weight:800;letter-spacing:.06em;
+  border:1.5px dashed var(--ink-3);border-radius:999px;padding:4px 8px;color:var(--ink-3);
+}
+
+/* ---------- 打字模式 ---------- */
+.vent-input{display:flex;flex-direction:column;flex-shrink:0;margin-top:8px}
+.vent.is-text .vent-field{min-height:200px}
+.vent-input textarea{
+  border:0;border-bottom:2px solid var(--ink);border-radius:0;background:transparent;
+  min-height:78px;max-height:150px;padding:6px 2px;font-size:14.5px;font-weight:600;
+  resize:none;
+}
+.vent-input textarea:focus-visible{outline:0;border-bottom-color:var(--pink);box-shadow:0 2px 0 var(--pink)}
+.vent-input label{font-size:11px;font-weight:800;letter-spacing:.1em;color:var(--ink-3);text-transform:uppercase}
+.vent-input .vent-count{align-self:flex-end;font-size:10.5px;font-weight:700;color:var(--ink-3);margin-top:4px}
+
+/* ---------- 底部链接 ---------- */
+.vent-links{display:flex;align-items:center;justify-content:center;gap:4px;flex-wrap:wrap;margin-top:8px}
+.vent-links .link{font-size:11.5px}
+.vent-links .sep{color:var(--ink-3);font-size:11px}
+
+@media(max-width:460px){
+  .vent-title{font-size:25px}
+  .vent-mic{height:196px}
+  .vent-mic .vent-rec{width:104px;height:104px}
+  .vf.w3 .vf-in{font-size:20.5px}
+  .vent-field{min-height:180px}
+}
+@media(prefers-reduced-motion:reduce){
+  .vent.is-rec .vent-eq i{animation:none}
+}
