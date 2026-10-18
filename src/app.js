@@ -409,7 +409,7 @@ function jumpTo(k){
     if(k==='prefs')return set({...base,planConfirmed:true,tab:3});
   }catch(err){toast('跳转失败：'+err.message)}
 }
-function toast(t){const feedback=t==='已记下你的反馈'&&!!document.querySelector('.recovery-journal');$('#toast').classList.toggle('dashboard-feedback',feedback);if(feedback){const box=document.querySelector('.phone').getBoundingClientRect();$('#toast').style.setProperty('--feedback-x',(box.left+box.width/2)+'px');$('#toast').style.setProperty('--feedback-y',(Math.max(0,box.top)+Math.min(innerHeight,box.bottom))/2+'px');}$('#toast').textContent=t;$('#toast').hidden=false;clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>$('#toast').hidden=true,2500)}
+function toast(t){const notice=$('#toast'),phone=$('.phone');if(notice.parentElement!==phone)phone.append(notice);notice.classList.toggle('dashboard-feedback',t==='已记下你的反馈'&&!!document.querySelector('.recovery-journal'));notice.textContent=t;notice.hidden=false;clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>notice.hidden=true,2500)}
 const button=(t,a,cls='primary',disabled=false)=>`<button class="${cls}" data-action="${a}" ${disabled?'disabled':''}>${t}</button>`;
 const ic=(n,c)=>`<i class="ii ii-${n}${c?' '+c:''}" aria-hidden="true"></i>`;
 const KIND_ICON={commute:'train',bed:'bed',dinner:'bowl',relax:'sofa',walk:'shoe',exercise:'dumbbell',wash:'tooth',free:'note',winddown:'moon',tv:'tv',read:'book',custom:'mug'};
@@ -938,6 +938,25 @@ function alignPageTitle(){
 }
 window.addEventListener('resize',()=>{requestAnimationFrame(alignPageTitle)});
 
+function currentPreviewPage(){
+ if(state.onboard<4)return state.onboard===0?'intro':'preferences';
+ if(panel==='prefs'||state.tab===3)return 'prefs';
+ if(panel==='tonight-review')return 'buildsum';
+ if(state.tab===2)return 'dash';
+ if(state.tab===1)return state.journeyMode==='done'?'done':state.journeyMode==='detail'?'detail':'combo';
+ if(state.stage==='transit')return state.transitStep==='breathe'?'breathe':'pod';
+ if(['commuteHub','commuteWindow','commutePodcast'].includes(state.stage))return 'road';
+ if(state.stage==='planning')return state.builderReview?(state.planConfirmed?'planned':'buildsum'):'build';
+ if(state.planConfirmed)return 'planned';
+ if(state.stage==='sealed')return 'sealed';
+ if(state.stage==='closed')return 'closed';
+ return 'dump';
+}
+function updatePreviewNavigation(){
+ const current=currentPreviewPage();
+ document.querySelectorAll('.journey-rail [data-goto]').forEach(button=>{if(button.dataset.goto===current)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current');});
+ document.querySelectorAll('.journey-rail .rail-step').forEach(step=>step.classList.toggle('is-current-step',!!step.querySelector('[aria-current="page"]')));
+}
 function render(){
   const first=state.onboard<4;
   const ritualMain=!first&&!panel&&state.tab===0&&!state.planConfirmed;
@@ -1017,7 +1036,7 @@ function render(){
   const upcoming=content.querySelector('.schedule-item.current');
   if(upcoming)upcoming.scrollIntoView({block:'nearest'});
   const breathStage=$('#breathStage');if(breathStage){breathStage.style.setProperty('--breath-offset',-(breathElapsed()%19)+'s');}
-  bindJourneyUI();bindBuilderUI();bindVent();bindOnboardingSwipe();updateVentExpression();
+  bindJourneyUI();bindBuilderUI();bindVent();bindOnboardingSwipe();updateVentExpression();updatePreviewNavigation();
   const card=$('#combo-card');if(card){let x;card.addEventListener('touchstart',e=>x=e.changedTouches[0].clientX,{passive:true});card.addEventListener('touchend',e=>{let d=e.changedTouches[0].clientX-x;if(Math.abs(d)>45)choose((state.combo+(d<0?1:2))%3)},{passive:true})}
 }
 

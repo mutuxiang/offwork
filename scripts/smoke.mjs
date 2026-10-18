@@ -64,10 +64,14 @@ try {
   await send('Emulation.setDeviceMetricsOverride', { width: 375, height: 900, deviceScaleFactor: 1, mobile: false });
   await load(entry); console.log(offlineMode ? 'Checking offline application...' : 'Checking served application...'); await ev('document.fonts.ready');
   assert(await ev('document.querySelector(".welcome-title").textContent.includes("主动设计你的休息时间")'), 'Welcome screen missing');
-  for (const page of ['dump', 'sealed', 'closed', 'pod', 'breathe', 'build', 'buildsum', 'planned', 'road', 'combo', 'detail', 'done', 'dash', 'prefs']) {
+  for (const page of ['intro', 'preferences', 'dump', 'sealed', 'closed', 'pod', 'breathe', 'build', 'buildsum', 'planned', 'road', 'combo', 'detail', 'done', 'dash', 'prefs']) {
     await ev(`jumpTo(${JSON.stringify(page)})`);
     assert(await ev('!!document.querySelector("#screen h1,#screen h2,#screen h3")'), `Missing screen: ${page}`);
+    assert(await ev('document.querySelector(".journey-rail [aria-current=page]")?.dataset.goto') === page, `Preview navigation out of sync: ${page}`);
+    assert(await ev('document.querySelectorAll(".journey-rail [aria-current=page]").length===1 && document.querySelectorAll(".journey-rail .is-current-step").length===1'), 'Preview must have one current page and section');
   }
+  await ev('jumpTo("pod");actions.transitNext()');
+  assert(await ev('document.querySelector(".journey-rail [aria-current=page]").dataset.goto==="breathe"'), 'Preview should follow in-app navigation');
   console.log('Checking interactive flows...');
   await ev('jumpTo("build")');
   assert(await ev('document.querySelector(".hero-back").textContent.includes("回到呼吸训练")'), 'First-step back label');
@@ -75,6 +79,7 @@ try {
   assert(await ev('document.querySelectorAll(".settings-pref-grid>.form-card").length===4'), 'Four settings cards missing');
   await ev('document.querySelector("#bed").value="23:30";document.querySelectorAll("[data-pref-input=bed]")[0].click();document.querySelector("[data-action=saveAllPreferences]").click()');
   assert(await ev('state.prefs.bed==="23:15"'), 'Preference shortcut/save failed');
+  assert(await ev('(()=>{const t=document.querySelector("#toast"),p=document.querySelector(".phone"),a=t.getBoundingClientRect(),b=p.getBoundingClientRect();return t.parentElement===p&&!t.hidden&&a.left>=b.left&&a.right<=b.right&&a.top>=b.top&&a.bottom<=b.bottom})()'), 'Preference toast must stay inside the phone');
   await ev('jumpTo("dump");set({draft:""})');
   assert(await ev('document.querySelector("#ventExpression").dataset.expression==="calm"'), 'Idle expression should be peaceful');
   assert(await ev('ventSimpleReaction("今天开了一天的会，自己的事情还没做完")==="hug"'), 'Retrospective response should be a hug');
