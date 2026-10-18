@@ -541,7 +541,7 @@ function moodForToday(){if(state.dailyMood)return state.dailyMood;const text=sta
 function dailySentence(){return `<section class="ritual-achievement daily-sentence" aria-label="每日一句">${ic('spark','achievement-star')}<div>每日一句</div><strong lang="zh-CN">事情在变好之前都有些坏</strong></section>`}
 
 function sealedScreen(){const parsed=arrangeDump(state.draft),tasks=TASK_PLACEHOLDER;return `<h2 class="ritual-title">别再想工作了，<br>这些事情明天再担心。</h2><div class="ritual-vault"><div class="row"><h3 class="inl">${ic('bell')}明日待办</h3><span class="tag-inline">${ic('clock','ii-xs')} 09:00</span></div>${memoImportCard(tasks)}</div><div class="ritual-achievement">${ic('star','achievement-star')}<div>今天做得不错</div><strong>${esc(state.achievement||parsed.achievement)}</strong></div>${dailySentence()}<div class="page-action ritual-slider-footer"><div class="ritual-switch"><span>向右拉，工作打烊</span><input id="ritual-switch" type="range" min="0" max="100" value="0" step="1" aria-label="向右滑动关闭工作模式"></div></div>`}
-function analyzingScreen(){return `<div class="ritual-analyzing"><div class="analyzing-dots" aria-hidden="true"><i></i><i></i><i></i></div><h3>AI 正在整理你刚才说的</h3><p>提取待办 · 归入保险箱 · 记下今天做得不错的事</p></div>`}
+function analyzingScreen(){return `<div class="ritual-analyzing"><div class="analyzing-dots" aria-hidden="true"><i></i><i></i><i></i></div><h3>AI 正在整理你刚才说的</h3><p>提取待办 · 记下今天做得不错的事</p></div>`}
 function readyScreen(){return `<h2>到家后，<br>不用再想。</h2><div class="card green"><h3 class="inl">${ic('check')}你的晚上已经排好了。</h3><p>${timeline().rows.filter(r=>!['commute','bed','free','winddown'].includes(r.kind)).map(r=>esc(r.title)).join(' → ')}</p></div><div class="page-action">${button('我到家了，开始今晚安排','home')}<div class="center">${button('查看今晚日程','schedule','link')}</div></div>`}
 function closedScreen(){const own=TASK_PLACEHOLDER,tasks=TASK_PLACEHOLDER;return `<section class="ritual-closed-copy"><div class="closed-emblem" aria-hidden="true">${ic('power')}</div><h2>今日工作已打烊，<br>你的个人时间已上线。</h2>${own.length?`<p class="closed-count">${own.length} 条待办已收好。</p>`:''}<div class="closed-tasks">${tasks.map(t=>`<div>${ic('check','closed-ic')}<span>${esc(t)}</span></div>`).join('')}</div><p class="closed-note">${esc(memoImportHint(tasks))}</p></section><div class="page-action closed-actions">${button('进入通勤过渡舱','enterTransit','primary')}</div>`}
 
@@ -851,29 +851,13 @@ function ventAppend(text){
 function ventFlag(on){
   const f=$('#ventSrc'); if(f) f.hidden=!on;
 }
-/* 真机有语音识别就走真识别；不支持或没授权时退回演示文本并明确标出 */
-function ventTryMic(){
-  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SR){ ventFlag(true); return; }
-  try{
-    const rec=new SR();
-    rec.lang='zh-CN'; rec.continuous=true; rec.interimResults=true;
-    rec.onresult=e=>{
-      if(!state.recording||ventSR!==rec)return;
-      let fin='';
-      for(let i=e.resultIndex;i<e.results.length;i++){ if(e.results[i].isFinal) fin+=e.results[i][0].transcript; }
-      if(fin.trim()){ ventReal=true; ventFlag(false); ventAppend(fin); }
-    };
-    rec.onerror=()=>{ ventReal=false; ventFlag(true); };
-    rec.onend=()=>{ if(state.recording&&ventSR===rec){ventReal=false;ventFlag(true);} };
-    rec.start();
-    ventSR=rec; ventReal=true; ventFlag(false);
-  }catch(err){ ventSR=null; ventReal=false; ventFlag(true); }
-}
+/* 原型直接播放倾诉示例，不访问麦克风或申请录音权限。 */
+function ventStartDemo(){ventReal=false;ventFlag(true)}
 function ventBegin(){
   if(ventTimer) clearInterval(ventTimer);
-  ventNextAt=0.6;
-  ventTryMic();
+  ventNextAt=0;
+  ventStartDemo();
+  ventTick();
   ventTimer=setInterval(ventTick,250);
 }
 function ventStop(){

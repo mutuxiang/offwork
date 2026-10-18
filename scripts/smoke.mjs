@@ -84,7 +84,9 @@ try {
   assert(await ev('document.querySelector("#ventExpression").dataset.expression==="calm"'), 'Idle expression should be peaceful');
   assert(await ev('ventSimpleReaction("今天开了一天的会，自己的事情还没做完")==="hug"'), 'Retrospective response should be a hug');
   assert(await ev('ventSimpleReaction("明天记得预约会议室")==="received"'), 'Todo acknowledgment missing');
-  await ev('ventTryMic=()=>{ventReal=true};set({draft:"",recording:true,recordStartedAt:Date.now()});ventStop();state.recording=true;ventClear();ventSpawn("今天开了一天的会，自己的事情还没做完。");ventSpawn("明天记得预约会议室。");');
+  await ev('window.SpeechRecognition=window.webkitSpeechRecognition=function(){throw new Error("Microphone must not be requested")};document.querySelector("[data-action=record]").click()');
+  assert(await ev('state.recording && document.querySelectorAll(".vent-chat-bubble").length>=1'), 'Venting demo should start immediately without microphone access');
+  await ev('ventStop();state.recording=true;ventClear();ventSpawn("今天开了一天的会，自己的事情还没做完。");ventSpawn("明天记得预约会议室。");');
   assert(await ev('document.querySelectorAll(".vent-chat-bubble").length===2'), 'Multiple vent bubbles missing');
   await ev('ventStop();state.recording=false;jumpTo("dash")');
   const top = await ev('document.querySelector(".screen-chrome .dj-header h2").getBoundingClientRect().top');

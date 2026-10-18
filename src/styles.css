@@ -3001,7 +3001,9 @@ mark,.ritual-title mark{background:linear-gradient(transparent 51%,#F8DF77 51%,#
 .phone .preference-settings .pref-section-title{margin-bottom:16px}
 .phone .preference-settings .form-card label:not(.option),.phone .preference-settings .form-card legend{font-size:15px;min-height:32px;margin-bottom:12px}
 .phone:has(>.nav:not([hidden]))>#screen:not(:has(.preference-page)){padding-bottom:4px}
-.phone>.nav{padding-top:4px}
+.phone>.nav{padding-top:9px}
+.phone:has(>.nav:not([hidden]))>#screen:not(:has(.preference-page))>.page-action{margin-bottom:24px!important}
+.phone .preference-page .form-card{background:#f5eddf}
 
 
 /* Desktop introduction shares both edges with the prototype. */
