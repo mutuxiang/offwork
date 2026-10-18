@@ -2986,3 +2986,32 @@ mark,.ritual-title mark{background:linear-gradient(transparent 51%,#F8DF77 51%,#
 .phone .dj-energy-reading>.batt-img{display:block;flex:0 0 72px;width:72px;height:46px;transform:none}
 .phone .dj-energy-reading>strong{font-size:26px;line-height:1.15;letter-spacing:-.05em;font-variant-numeric:tabular-nums;white-space:nowrap}
 .phone .dj-energy-reading>strong>small{font-size:12px;letter-spacing:0;margin-left:2px}
+.phone .preference-page .pref-quick-control .unit-input{gap:4px}
+.phone .preference-page .pref-quick-control .unit-input input{field-sizing:content;width:auto;min-width:2ch;max-width:4ch;flex:0 0 auto;appearance:textfield;-moz-appearance:textfield}
+.phone .preference-page .pref-quick-control .unit-input input::-webkit-inner-spin-button,.phone .preference-page .pref-quick-control .unit-input input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.phone .preference-page .pref-quick-control .unit-input>span{transform:translateY(2px)}
+
+
+/* Desktop introduction shares both edges with the prototype. */
+.intro .app-description p{max-width:none;margin:0;font-size:14px;line-height:1.9;color:var(--ink-2)}
+.intro .app-description p+p{margin-top:16px}
+.intro .app-description strong{color:var(--ink);font-weight:800}
+.intro .description-focus{background:linear-gradient(transparent 55%,var(--yellow) 55%);padding:0 2px}
+.intro-footer{display:flex;align-items:flex-end;justify-content:space-between;gap:18px}
+.intro-footer .footer-note{text-align:right;line-height:1.7}
+@media(min-width:1041px){
+ .layout{align-items:stretch}
+ .intro:has(.journey-rail){padding:0;display:flex;flex-direction:column;min-height:0}
+ .intro .brand{flex-shrink:0}
+ .intro .tag{align-self:flex-start;flex-shrink:0}
+ .intro .app-description{max-width:none;margin:22px 0 0}
+ .intro .journey-rail{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 24px;margin:26px 0 24px;padding-top:20px}
+ .intro .journey-rail>.rail-title{grid-column:1/-1;margin:0}
+ .intro .rail-step{margin-left:10px;padding:0 0 0 23px;border:0}
+ .intro .rail-step>div{gap:6px}
+ .intro .rail-step h3{margin-bottom:9px}
+ .intro .journey-rail button{font-size:12px;min-height:32px;padding:4px 9px}
+ .intro .intro-footer{margin-top:auto}
+ .intro:has(.journey-rail) .preview-tools{margin:0}
+}
+@media(min-width:461px) and (max-width:1040px){.intro{padding-top:0}.intro-footer{margin-top:24px}}
