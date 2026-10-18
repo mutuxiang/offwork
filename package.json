@@ -1,0 +1,13 @@
+{
+  "name": "offwork-prototype",
+  "version": "2026.10.18",
+  "private": true,
+  "description": "OffWork 收工后的生活安排与放松交互原型",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "start": "node scripts/serve.mjs",
+    "build": "node scripts/build.mjs",
+    "check": "node scripts/check.mjs",
+    "test": "node scripts/smoke.mjs"
+  }
+}
