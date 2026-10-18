@@ -2978,3 +2978,11 @@ mark,.ritual-title mark{background:linear-gradient(transparent 51%,#F8DF77 51%,#
 .phone .screen-chrome>.dj-header h2{margin:0;font-size:28px;line-height:1.25}
 .phone .screen-content:has(>.recovery-journal){padding-top:0!important}
 .phone .recovery-journal{padding-top:0}
+.phone .screen-chrome:has(>.dj-header){padding-bottom:12px}
+.phone .recovery-journal>.dj-today{margin-top:0;padding:18px}
+.phone .dj-today>.dj-today-body{margin-top:0;align-items:center}
+.phone .dj-today .dj-metric>span{font-size:12px}
+.phone .dj-energy-reading{display:flex;align-items:center;gap:8px;margin-top:5px;min-height:46px}
+.phone .dj-energy-reading>.batt-img{display:block;flex:0 0 72px;width:72px;height:46px;transform:none}
+.phone .dj-energy-reading>strong{font-size:26px;line-height:1.15;letter-spacing:-.05em;font-variant-numeric:tabular-nums;white-space:nowrap}
+.phone .dj-energy-reading>strong>small{font-size:12px;letter-spacing:0;margin-left:2px}

@@ -121,8 +121,8 @@ function aiFeedback(v){
 }
 function journeyRecovery(){
  const score=state.score,fb=state.aiFeedback,today=dashTodayHours(),average=dashWeekAverage(),week=dashWeekScore();
- return `<div class="recovery-journal"><header class="dj-header"><h2>一点一点，<br>把自己充回来。</h2></header>
- <section class="dj-today" aria-labelledby="dj-today-title"><div class="dj-today-head"><h3 id="dj-today-title">今天，时间归你。</h3><i class="batt-img batt-${batteryBucket(score)}" role="img" aria-label="今日自评 ${score===null?'尚未记录':score+'%'}"></i></div><div class="dj-today-body"><div class="dj-metric"><span>个人时间</span><strong>${today===null?'—':today}<small>小时</small></strong></div><div class="dj-metric"><span>今日电量</span><strong>${score===null?'—':score}${score===null?'':'<small>%</small>'}</strong></div></div></section>
+ return `<div class="recovery-journal"><header class="dj-header"><h2>工作辛苦了，<br>希望你<mark>休息的不错</mark>。</h2></header>
+ <section class="dj-today" aria-label="今日个人时间与电量"><div class="dj-today-body"><div class="dj-metric"><span>个人时间</span><strong>${today===null?'—':today}<small>小时</small></strong></div><div class="dj-metric"><span>今日电量</span><div class="dj-energy-reading"><i class="batt-img batt-${batteryBucket(score)}" role="img" aria-label="今日自评 ${score===null?'尚未记录':score+'%'}"></i><strong>${score===null?'—':score}${score===null?'':'<small>%</small>'}</strong></div></div></div></section>
  <section class="dj-week" aria-labelledby="dj-week-title"><div class="dj-section-head"><h3 id="dj-week-title">最近的下班时光</h3></div><div class="dj-week-summary"><div class="dj-metric"><span>平均个人时间</span><strong>${average}<small>小时</small></strong></div><div class="dj-metric"><span>平均电量</span><strong>${week}<small>%</small></strong></div></div>${dashJournal()}</section>
  <section class="dash-ai dj-insight"><span class="dj-insight-label">${ic('bulb','ii-sm')}一个小发现</span><p class="ai-insight">泡脚的晚上，<br>你更容易慢下来。</p><div class="ai-ask"><span>说得对吗？</span><div class="ai-btns"><button data-ai-feedback="yes" aria-pressed="${!!(fb&&fb.value==='yes')}">说得对</button><button data-ai-feedback="no" aria-pressed="${!!(fb&&fb.value==='no')}">不太对</button></div></div></section></div>`;
 }

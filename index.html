@@ -3166,6 +3166,14 @@ mark,.ritual-title mark{background:linear-gradient(transparent 51%,#F8DF77 51%,#
 .phone .screen-chrome>.dj-header h2{margin:0;font-size:28px;line-height:1.25}
 .phone .screen-content:has(>.recovery-journal){padding-top:0!important}
 .phone .recovery-journal{padding-top:0}
+.phone .screen-chrome:has(>.dj-header){padding-bottom:12px}
+.phone .recovery-journal>.dj-today{margin-top:0;padding:18px}
+.phone .dj-today>.dj-today-body{margin-top:0;align-items:center}
+.phone .dj-today .dj-metric>span{font-size:12px}
+.phone .dj-energy-reading{display:flex;align-items:center;gap:8px;margin-top:5px;min-height:46px}
+.phone .dj-energy-reading>.batt-img{display:block;flex:0 0 72px;width:72px;height:46px;transform:none}
+.phone .dj-energy-reading>strong{font-size:26px;line-height:1.15;letter-spacing:-.05em;font-variant-numeric:tabular-nums;white-space:nowrap}
+.phone .dj-energy-reading>strong>small{font-size:12px;letter-spacing:0;margin-left:2px}
 </style>
 </head><body>
 <div class="layout"><aside class="intro"><div class="brand"><img src="assets/vectors/00191aa07984fc4b35f9.svg" alt="OffWork" class="brand-logo"></div><div class="tag">MAKE ROOM FOR YOURSELF</div><h1>下班了，<br>把时间还给自己。</h1><p class="app-description">OffWork 陪你从工作回到生活：下班后放下心事，在通勤路上安排好今晚；回到家，打开行程做点喜欢的事，再看看自己恢复了多少电量。</p><div class="preview-tools"><button id="reset">重新体验</button></div>
@@ -3295,8 +3303,8 @@ function aiFeedback(v){
 }
 function journeyRecovery(){
  const score=state.score,fb=state.aiFeedback,today=dashTodayHours(),average=dashWeekAverage(),week=dashWeekScore();
- return `<div class="recovery-journal"><header class="dj-header"><h2>一点一点，<br>把自己充回来。</h2></header>
- <section class="dj-today" aria-labelledby="dj-today-title"><div class="dj-today-head"><h3 id="dj-today-title">今天，时间归你。</h3><i class="batt-img batt-${batteryBucket(score)}" role="img" aria-label="今日自评 ${score===null?'尚未记录':score+'%'}"></i></div><div class="dj-today-body"><div class="dj-metric"><span>个人时间</span><strong>${today===null?'—':today}<small>小时</small></strong></div><div class="dj-metric"><span>今日电量</span><strong>${score===null?'—':score}${score===null?'':'<small>%</small>'}</strong></div></div></section>
+ return `<div class="recovery-journal"><header class="dj-header"><h2>工作辛苦了，<br>希望你<mark>休息的不错</mark>。</h2></header>
+ <section class="dj-today" aria-label="今日个人时间与电量"><div class="dj-today-body"><div class="dj-metric"><span>个人时间</span><strong>${today===null?'—':today}<small>小时</small></strong></div><div class="dj-metric"><span>今日电量</span><div class="dj-energy-reading"><i class="batt-img batt-${batteryBucket(score)}" role="img" aria-label="今日自评 ${score===null?'尚未记录':score+'%'}"></i><strong>${score===null?'—':score}${score===null?'':'<small>%</small>'}</strong></div></div></div></section>
  <section class="dj-week" aria-labelledby="dj-week-title"><div class="dj-section-head"><h3 id="dj-week-title">最近的下班时光</h3></div><div class="dj-week-summary"><div class="dj-metric"><span>平均个人时间</span><strong>${average}<small>小时</small></strong></div><div class="dj-metric"><span>平均电量</span><strong>${week}<small>%</small></strong></div></div>${dashJournal()}</section>
  <section class="dash-ai dj-insight"><span class="dj-insight-label">${ic('bulb','ii-sm')}一个小发现</span><p class="ai-insight">泡脚的晚上，<br>你更容易慢下来。</p><div class="ai-ask"><span>说得对吗？</span><div class="ai-btns"><button data-ai-feedback="yes" aria-pressed="${!!(fb&&fb.value==='yes')}">说得对</button><button data-ai-feedback="no" aria-pressed="${!!(fb&&fb.value==='no')}">不太对</button></div></div></section></div>`;
 }
