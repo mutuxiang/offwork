@@ -3192,7 +3192,7 @@ mark,.ritual-title mark{background:linear-gradient(transparent 51%,#F8DF77 51%,#
 .phone>.nav{padding-top:9px}
 .phone:has(>.nav:not([hidden]))>#screen:not(:has(.preference-page))>.page-action{margin-bottom:24px!important}
 .phone .preference-page .form-card{background:#f5eddf}
-.phone .summary-corner-art{right:28px;bottom:30px}
+.phone .summary-corner-art{right:12px;bottom:30px;transform:rotate(-6deg)}
 .phone .review-inline-list{gap:18px;padding:2px 0 10px}
 .phone .review-edit-row{--review-accent:#eee8dc;padding:16px 18px 18px;border:1.5px solid var(--ink);border-radius:22px;background:#fffdf7;box-shadow:none}
 .phone .review-tint-yellow{--review-accent:var(--yellow)}
@@ -3311,7 +3311,7 @@ function journeyDone(){
     return `<h2>这一件，<br>做完了。</h2><p class="lead">今晚还剩 ${left} 件，慢慢来，不着急。</p><div class="page-action">${button('再做一件','journeyAgain')}<div class="center">${button('回到今晚日程','journeyBack','link')}</div></div>`;
   }
   const bk=score===null?0:score>=95?100:score>=80?90:score>=60?70:score>=40?50:30;
-  return `<h2>今晚恢复了几成，<br>你自己说了算。</h2><div class="journey-battery"><div class="row"><strong class="inl">充电池 · 今日自评</strong><span>${score===null?'未选择':score+'%'}</span></div><div class="batt-figure"><i class="batt-img batt-${bk}" role="img" aria-label="充电池 ${bk}%"></i></div></div><p class="lead">${score===null?'点一下你现在感觉的位置。':'记下了，按你的感觉来。'}</p><div class="journey-score">${[[30,'三成'],[50,'五成'],[70,'七成'],[90,'九成'],[100,'满格']].map(([v,t])=>`<button data-journey-score="${v}" aria-pressed="${score===v}">${t}</button>`).join('')}</div><div class="page-action">${button('晚安','dashboard')}<div class="center">${button('回到今晚日程','journeyBack','link')}</div></div>`
+  return `<h2>今晚恢复了几成，<br>你自己说了算。</h2><div class="journey-battery"><div class="row"><strong class="inl">充电池 · 今日自评</strong><span>${score===null?'':score+'%'}</span></div><div class="batt-figure"><i class="batt-img batt-${bk}" role="img" aria-label="充电池 ${bk}%"></i></div></div><p class="lead">${score===null?'点一下你现在感觉的位置。':'记下了，按你的感觉来。'}</p><div class="journey-score">${[[30,'三成'],[50,'五成'],[70,'七成'],[90,'九成'],[100,'满格']].map(([v,t])=>`<button data-journey-score="${v}" aria-pressed="${score===v}">${t}</button>`).join('')}</div><div class="page-action">${button('晚安','dashboard')}<div class="center">${button('回到今晚日程','journeyBack','link')}</div></div>`
 }
 
 function eveningTransition(){return `<section class="evening-transition"><div class="evening-chapters"><span>${ic('check','ii-sm')} 下班</span><i aria-hidden="true"></i><strong>安排今晚</strong></div><div class="evening-scene" aria-hidden="true"><div class="evening-window"><span class="evening-moon"></span>${ic('star','evening-star')}</div><div class="evening-sofa">${ic('sofa')}</div><span class="evening-floor"></span>${ic('spark','evening-spark')}</div><div class="evening-copy"><p class="evening-kicker">把时间，还给自己</p><h2>工作先到这里，<br>今晚轮到你了。</h2><p>趁着回家的路，把今晚安排好。<br>到家后，就能按自己的节奏开始。</p></div></section><div class="page-action">${button('开始安排今晚','beginTonight')}</div>`;}

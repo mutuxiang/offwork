@@ -3004,7 +3004,7 @@ mark,.ritual-title mark{background:linear-gradient(transparent 51%,#F8DF77 51%,#
 .phone>.nav{padding-top:9px}
 .phone:has(>.nav:not([hidden]))>#screen:not(:has(.preference-page))>.page-action{margin-bottom:24px!important}
 .phone .preference-page .form-card{background:#f5eddf}
-.phone .summary-corner-art{right:28px;bottom:30px}
+.phone .summary-corner-art{right:12px;bottom:30px;transform:rotate(-6deg)}
 .phone .review-inline-list{gap:18px;padding:2px 0 10px}
 .phone .review-edit-row{--review-accent:#eee8dc;padding:16px 18px 18px;border:1.5px solid var(--ink);border-radius:22px;background:#fffdf7;box-shadow:none}
 .phone .review-tint-yellow{--review-accent:var(--yellow)}
