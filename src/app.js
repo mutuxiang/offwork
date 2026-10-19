@@ -926,9 +926,12 @@ function syncSummaryDecoration(){
  const source=document.querySelector('.phone .summary-corner-art');
  let layer=document.getElementById('summary-decoration-overlay');
  if(!source){layer?.remove();return;}
- const box=source.getBoundingClientRect(),style=getComputedStyle(source);
- if(!layer){layer=document.createElement('div');layer.id='summary-decoration-overlay';layer.setAttribute('aria-hidden','true');document.body.append(layer);}
- layer.style.cssText=`position:fixed;left:${box.left}px;top:${box.top}px;width:${box.width}px;height:${box.height}px;display:grid;place-items:center;pointer-events:none;z-index:9;`;
+ const box=source.getBoundingClientRect(),style=getComputedStyle(source),phone=document.querySelector('.phone'),frame=phone.getBoundingClientRect();
+ if(!layer){layer=document.createElement('div');layer.id='summary-decoration-overlay';layer.setAttribute('aria-hidden','true');}
+ if(layer.parentElement!==phone)phone.append(layer);
+ const left=Math.max(8,Math.min(box.left-frame.left-phone.clientLeft,phone.clientWidth-box.width-8));
+ const top=Math.max(8,Math.min(box.top-frame.top-phone.clientTop,phone.clientHeight-box.height-8));
+ layer.style.cssText=`position:absolute;left:${left}px;top:${top}px;width:${box.width}px;height:${box.height}px;display:grid;place-items:center;pointer-events:none;z-index:9;`;
  let art=layer.firstElementChild;
  if(!art){art=document.createElement('i');art.className='ii ii-moon';layer.append(art);}
  art.style.cssText=`display:block;position:static;width:${style.width};height:${style.height};background-image:${style.backgroundImage};background-size:${style.backgroundSize};background-repeat:no-repeat;background-position:center;transform:${style.transform};opacity:${style.opacity};pointer-events:none;`;
