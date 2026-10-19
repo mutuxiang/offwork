@@ -69,6 +69,7 @@ try {
     assert(await ev('!!document.querySelector("#screen h1,#screen h2,#screen h3")'), `Missing screen: ${page}`);
     assert(await ev('document.querySelector(".journey-rail [aria-current=page]")?.dataset.goto') === page, `Preview navigation out of sync: ${page}`);
     assert(await ev('document.querySelectorAll(".journey-rail [aria-current=page]").length===1 && document.querySelectorAll(".journey-rail .is-current-step").length===1'), 'Preview must have one current page and section');
+    assert(await ev('(()=>{const source=document.querySelector(".phone .summary-corner-art"),layer=document.querySelector("#summary-decoration-overlay");if(!source)return !layer;if(layer?.parentElement!==document.body)return false;const a=source.getBoundingClientRect(),b=layer.firstElementChild.getBoundingClientRect();return ["left","top","width","height"].every(key=>Math.abs(a[key]-b[key])<1)})()'), `Summary art must retain its position outside clipping containers: ${page}`);
   }
   await ev('jumpTo("pod");actions.transitNext()');
   assert(await ev('document.querySelector(".journey-rail [aria-current=page]").dataset.goto==="breathe"'), 'Preview should follow in-app navigation');

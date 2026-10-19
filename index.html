@@ -4169,6 +4169,20 @@ function alignPageTitle(){
 }
 window.addEventListener('resize',()=>{requestAnimationFrame(alignPageTitle)});
 
+function syncSummaryDecoration(){
+ const source=document.querySelector('.phone .summary-corner-art');
+ let layer=document.getElementById('summary-decoration-overlay');
+ if(!source){layer?.remove();return;}
+ const box=source.getBoundingClientRect(),style=getComputedStyle(source);
+ if(!layer){layer=document.createElement('div');layer.id='summary-decoration-overlay';layer.setAttribute('aria-hidden','true');document.body.append(layer);}
+ layer.style.cssText=`position:fixed;left:${box.left}px;top:${box.top}px;width:${box.width}px;height:${box.height}px;display:grid;place-items:center;pointer-events:none;z-index:9;`;
+ let art=layer.firstElementChild;
+ if(!art){art=document.createElement('i');art.className='ii ii-moon';layer.append(art);}
+ art.style.cssText=`display:block;position:static;width:${style.width};height:${style.height};background-image:${style.backgroundImage};background-size:${style.backgroundSize};background-repeat:no-repeat;background-position:center;transform:${style.transform};opacity:${style.opacity};pointer-events:none;`;
+ source.style.visibility='hidden';
+}
+window.addEventListener('resize',()=>requestAnimationFrame(syncSummaryDecoration));
+document.addEventListener('scroll',syncSummaryDecoration,{capture:true,passive:true});
 function currentPreviewPage(){
  if(state.onboard<4)return state.onboard===0?'intro':'preferences';
  if(panel==='prefs'||state.tab===3)return 'prefs';
@@ -4267,7 +4281,7 @@ function render(){
   const upcoming=content.querySelector('.schedule-item.current');
   if(upcoming)upcoming.scrollIntoView({block:'nearest'});
   const breathStage=$('#breathStage');if(breathStage){breathStage.style.setProperty('--breath-offset',-(breathElapsed()%19)+'s');}
-  bindJourneyUI();bindBuilderUI();bindVent();bindOnboardingSwipe();updateVentExpression();updatePreviewNavigation();
+  bindJourneyUI();bindBuilderUI();bindVent();bindOnboardingSwipe();updateVentExpression();updatePreviewNavigation();syncSummaryDecoration();
   const card=$('#combo-card');if(card){let x;card.addEventListener('touchstart',e=>x=e.changedTouches[0].clientX,{passive:true});card.addEventListener('touchend',e=>{let d=e.changedTouches[0].clientX-x;if(Math.abs(d)>45)choose((state.combo+(d<0?1:2))%3)},{passive:true})}
 }
 
